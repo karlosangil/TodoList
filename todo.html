@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Todo List</h1>
+    
+    <input type="text" id="task" placeholder="Enter task">
+    <button id="btnadd">Add</button>
+    <button id="btnremove">Remove</button>
+    <button id="btnupdate">Update</button>
+
+    <ol id="myList"></ol>
+
+    <script>
+        const items = []
+        const task = document.querySelector('#task')
+        const btnadd = document.querySelector('#btnadd')
+        const mylist = document.querySelector('#myList')
+
+        function all() {
+            mylist.innerHTML = ''; // Clear the list before re-rendering
+            for (let x = 0; x < items.length; x++) {
+                const created = document.createElement('li')
+                created.innerHTML = `${items[x]}`
+                mylist.append(created);
+            }
+        }
+
+        function add() {
+            const newItem = task.value;
+            if (newItem) {
+                items.push(newItem);
+                alert(`${newItem} Has been added to your list`);
+                all();
+                task.value = " ";
+            }
+        }
+        btnadd.addEventListener('click', add)
+
+        const btnremove = document.querySelector('#btnremove')
+        function remove() {
+            let rev = prompt('What number will you remove')
+            if (rev > 0 && rev <= items.length) {
+                const del = items.splice(rev - 1, 1)
+                alert(`${del} has been removed from your list`)
+                all();
+            } else {
+                alert(`Invalid input or out of range`);
+            }
+        }
+        btnremove.addEventListener('click', remove)
+
+        const btnupdate = document.querySelector('#btnupdate')
+        function update() {
+            let ask = prompt('Enter number that you want to update')
+            if (ask > 0 && ask <= items.length) {
+                let up = prompt('Try to update')
+                items[ask - 1] = up; // Update the item in the array
+                all();
+            } else {
+                alert('Invalid input!');
+            }
+        }
+        btnupdate.addEventListener('click', update)
+    </script>
+</body>
+</html>
